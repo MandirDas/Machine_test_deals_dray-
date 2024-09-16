@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_project/services/api_service.dart';
 import 'package:flutter_project/screens/home_screen.dart';
 import 'package:flutter_project/screens/registration_screen.dart';
-import 'package:flutter_project/utils/secure_storage.dart';
+// import 'package:flutter_project/utils/secure_storage.dart';
 import 'dart:async';
+
+import 'package:flutter_project/utils/tem_storage.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String userId;
@@ -67,7 +69,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     }
 
     try {
-      final deviceId = await SecureStorage.getDeviceId();
+      // final deviceId = await SecureStorage.getDeviceId();
+      final temporaryStorage = TemporaryStorage();
+      final deviceId = await temporaryStorage.getDeviceId();
       print(deviceId);
       final response =
           await ApiService.verifyOtp(otp, deviceId!, widget.userId);
@@ -78,7 +82,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(data['message'])),
         );
-        await SecureStorage.setRegistrationStatus(registrationStatus);
+        // await SecureStorage.setRegistrationStatus(registrationStatus);
+        await temporaryStorage.setRegistrationStatus(registrationStatus);
         if (registrationStatus == 'Incomplete') {
           Navigator.pushReplacement(
             context,
@@ -107,7 +112,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   void _resendOtp() async {
     try {
-      final deviceId = await SecureStorage.getDeviceId();
+      // final deviceId = await SecureStorage.getDeviceId();
+      final temporaryStorage = TemporaryStorage();
+      final deviceId = await temporaryStorage.getDeviceId();
       final response = await ApiService.login(widget.phoneNumber, deviceId!);
 
       if (response['status'] == 1) {
@@ -116,10 +123,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         final newDeviceId = data['deviceId'];
 
         if (newDeviceId != deviceId) {
-          await SecureStorage.setDeviceId(newDeviceId);
+          await temporaryStorage.setDeviceId(newDeviceId);
         }
 
-        await SecureStorage.setUserId(userId);
+        await temporaryStorage.setUserId(userId);
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('OTP resent to ${widget.phoneNumber}')),

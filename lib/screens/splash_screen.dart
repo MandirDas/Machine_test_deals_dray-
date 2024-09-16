@@ -3,7 +3,8 @@ import 'package:flutter_project/screens/login_screen.dart';
 import 'package:flutter_project/screens/home_screen.dart';
 import 'package:flutter_project/services/api_service.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter_project/utils/secure_storage.dart';
+// import 'package:flutter_project/utils/secure_storage.dart';
+import 'package:flutter_project/utils/tem_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:geolocator/geolocator.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -120,14 +121,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (response['status'] == 1) {
         final String deviceId = response['data']['deviceId'];
-        await SecureStorage.setDeviceId(deviceId);
+        final temporaryStorage = TemporaryStorage();
+        await temporaryStorage.setDeviceId(deviceId);
         print(response['data']['message']);
         print(deviceId);
 
-        final String? userId = await SecureStorage.getUserId();
+        // final String? userId = await SecureStorage.getUserId();
+        final String? userId = await temporaryStorage.getUserId();
         final String? registrationStatus =
-            await SecureStorage.getRegistrationStatus();
+            await temporaryStorage.getRegistrationStatus();
         print(userId);
+        print(1);
         print(registrationStatus);
 
         if ((userId != null && userId.isNotEmpty) &&

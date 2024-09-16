@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/screens/home_screen.dart';
 import 'package:flutter_project/services/api_service.dart';
-import 'package:flutter_project/utils/secure_storage.dart';
+import 'package:flutter_project/utils/tem_storage.dart';
+// import 'package:flutter_project/utils/secure_storage.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final String userId;
@@ -23,7 +24,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final referralCode = _referralCodeController.text;
 
     try {
-      await SecureStorage.setRegistrationStatus('Complete');
+      // await SecureStorage.setRegistrationStatus('Complete');
+      final temporaryStorage = TemporaryStorage();
+      temporaryStorage.setRegistrationStatus('Complete');
       await ApiService.register(email, password, referralCode, widget.userId);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const HomeScreen()),

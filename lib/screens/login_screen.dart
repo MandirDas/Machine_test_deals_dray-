@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/screens/otp_screen.dart';
 import 'package:flutter_project/services/api_service.dart';
-import 'package:flutter_project/utils/secure_storage.dart';
+import 'package:flutter_project/utils/tem_storage.dart';
+// import 'package:flutter_project/utils/secure_storage.dart';
 // import 'package:secure_storage/secure_storage.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,7 +17,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     final phoneNumber = _phoneController.text;
-    String? deviceId = await SecureStorage.getDeviceId();
+    // String? deviceId = await SecureStorage.getDeviceId();
+    final temporaryStorage = TemporaryStorage();
+    final String? deviceId = await temporaryStorage.getDeviceId();
 
     if (deviceId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -38,10 +41,11 @@ class _LoginScreenState extends State<LoginScreen> {
         print(userId);
         print(data);
         if (newDeviceId != deviceId) {
-          await SecureStorage.setDeviceId(newDeviceId);
+          // await SecureStorage.setDeviceId(newDeviceId);
+          await temporaryStorage.setDeviceId(newDeviceId);
         }
 
-        await SecureStorage.setUserId(userId);
+        await temporaryStorage.setUserId(userId);
 
         Navigator.of(context).push(
           MaterialPageRoute(
