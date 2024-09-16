@@ -75,75 +75,77 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                alignment: Alignment.topCenter,
-                height: 200,
-                width: 200,
-                child: Opacity(
-                  opacity: 0.5,
-                  child: Image.asset(
-                    'assets/dealsdray_logo.jpeg',
-                    fit: BoxFit.cover,
+        child: SingleChildScrollView(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  height: 200,
+                  width: 200,
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Image.asset(
+                      'assets/dealsdray_logo.jpeg',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: Container(
-                height: 40,
-                width: 100,
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(20),
+              const SizedBox(height: 20),
+              Center(
+                child: Container(
+                  height: 40,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Phone',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
-                child: Center(
-                  child: Text(
-                    'Phone',
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Glad to see you!',
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Please provide your phone number',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+              ),
+              const SizedBox(height: 30),
+              TextField(
+                controller: _phoneController,
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(labelText: 'Phone Number'),
+              ),
+              const SizedBox(height: 16),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.maxFinite, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: Colors.red,
+                  ),
+                  onPressed: _login,
+                  child: const Text(
+                    'SEND CODE',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Glad to see you!',
-              style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'Please provide your phone number',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
-            ),
-            const SizedBox(height: 30),
-            TextField(
-              controller: _phoneController,
-              keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(labelText: 'Phone Number'),
-            ),
-            const SizedBox(height: 16),
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.maxFinite, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  backgroundColor: Colors.red,
-                ),
-                onPressed: _login,
-                child: const Text(
-                  'SEND CODE',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

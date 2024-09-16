@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// import 'package:flutter_project/screens/registration_screen.dart';
 import 'package:flutter_project/screens/splash_screen.dart';
 import 'package:flutter_project/utils/tem_storage.dart';
 
